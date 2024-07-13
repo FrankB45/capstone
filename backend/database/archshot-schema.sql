@@ -14,7 +14,7 @@ CREATE TABLE games (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE end (
+CREATE TABLE ends (
     id SERIAL PRIMARY KEY,
     game_id INTEGER REFERENCES games(id) ON DELETE CASCADE,
     archer_char CHAR(1),
@@ -26,7 +26,7 @@ CREATE TABLE end (
 
 CREATE TABLE shot (
     shot_id SERIAL PRIMARY KEY,
-    end_id INTEGER REFERENCES end(id) ON DELETE CASCADE,
+    end_id INTEGER REFERENCES ends(id) ON DELETE CASCADE,
     shot_number INTEGER,
     score INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
