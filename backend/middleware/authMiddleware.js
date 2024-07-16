@@ -22,14 +22,16 @@ function authenticateJWT(req, res, next) {
 }
 
 function authUser(req, res, next) {
-    if (parseInt(req.params.userID) !== req.user.id) {
+    console.log(req.params.user_id);
+    console.log(req.user.id);
+    if (parseInt(req.params.user_id) !== req.user.id) {
         return res.status(403).json({ message: 'User not authorized' });
     }
     next();
 }
 
 async function authGame(req, res, next) {
-    const gameID = parseInt(req.params.gameID);
+    const gameID = parseInt(req.params.game_id);
     const userID = parseInt(req.user.id);
 
     //Get all the gameIDs for the user
