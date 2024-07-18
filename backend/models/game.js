@@ -174,6 +174,21 @@ class Game {
         return { end };
     }
 
+    /** 
+     * Gets all the gameIDs for a user
+    */
+    static async getGameIDs(user_id) {
+        //Get all the games for the user
+        let gameResult = await db.query(
+            `SELECT * FROM games WHERE user_id = $1`,
+            [user_id]
+        );
+        const gameIDs = gameResult.rows.map(game => {
+            return game.id;
+        });
+        return gameIDs;
+    }
+
 };
 
 module.exports = Game;
