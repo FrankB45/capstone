@@ -4,7 +4,7 @@ import Controls from './Controls'
 function CountDown({timeSet}) {
 
   //Used to keep track of the running time
-  const [time, setTime] = useState(timeSet[3]);
+  const [time, setTime] = useState(timeSet.reduce((acc, time) => acc + time, 0));
   //Used to keep track of the running state
   const [isRunning, setIsRunning] = useState(false);
   //Interval reference to keep track of the running Interval clock
@@ -57,7 +57,8 @@ function CountDown({timeSet}) {
 
   //Effect to update the time based on the timeSet
   useEffect(() => {
-    setTime(timeSet[3]);
+    let totalTime = timeSet.reduce((acc, time) => acc + time, 0);
+    setTime(totalTime);
     setIsRunning(false);
     if (intervalRef.current) {
       clearInterval(intervalRef.current);

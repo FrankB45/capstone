@@ -1,5 +1,5 @@
 import React from 'react'
-import { CardTitle } from 'reactstrap'
+import { CardTitle, Row, Col, CardText } from 'reactstrap'
 import TimeRow from './TimeRow'
 
 function TimeSection({ title, times, onTimeChange }) {
@@ -16,6 +16,15 @@ function TimeSection({ title, times, onTimeChange }) {
                     onTimeChange={onTimeChange}
                      />
             ))}
+        <Row className="mt-2">
+          <Col xs="6" className="flex border-t border-gray-300 items-center">
+          <CardText className='w-1/2'>Total</CardText>
+            {times.reduce((acc, time) => {
+              return acc + time.value;
+            }, 0)}
+            
+          </Col>
+        </Row>
         <hr className="my-4" />
     </div>
   )

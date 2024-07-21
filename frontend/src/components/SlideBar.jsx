@@ -1,6 +1,6 @@
 import {React, useState} from 'react'
 import { Container, Row, Col, Button} from 'reactstrap'
-import Timings from './Timings'
+import Timings from './Controls/Timings'
 import './SlideBar.css'
 
 function SlideBar({ isOpen, setIsOpen, side = 'left', children }) {

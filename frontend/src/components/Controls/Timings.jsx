@@ -8,21 +8,19 @@ function Timings({setTimeSet}) {
     //false = 40 seconds per arrow
     const [shotMode, setShotMode] = useState(true);
     //pre-defined timings for 30 and 40 seconds per arrow
-    const sec30 = [60, 30, 10, 90];
-    const sec40 = [80, 40, 10, 120];
+    const sec30 = [50, 30, 10];
+    const sec40 = [70, 40, 10];
     //Managed time sets
     //Changing these will change when the clock changes color
     const [timings, setTimings] = useState([
         { value: 60, label: 'Seconds Green', color: 'green' },
         { value: 30, label: 'Seconds Yellow', color: 'yellow' },
         { value: 10, label: 'Seconds Red', color: 'red' },
-        { value: 90, label: 'Seconds Total', color: 'gray' }
     ]);
     const [offTimings, setOffTimings] = useState([
         { value: 0, label: 'Seconds Green', color: 'green' },
         { value: 30, label: 'Seconds Yellow', color: 'yellow' },
         { value: 10, label: 'Seconds Red', color: 'red' },
-        { value: 30, label: 'Seconds Total', color: 'gray' },
       ]);
     
     //This function will update the timings based on the index and new time

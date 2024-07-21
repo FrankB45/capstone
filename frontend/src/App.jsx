@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import './App.css'
-import CountDown from './components/CountDown'
+import CountDown from './components/ShotClock/CountDown'
 import SlideBar from './components/SlideBar'
-import Timings from './components/Timings'
+import Timings from './components/Controls/Timings'
 
 function App() {
 
   //Timeset for the countdown timer
   //Can be modified by the user via the SlideBar
-  const [timeSet, setTimeSet] = useState([60, 30, 10, 90]);
-  const [offTimeSet, setOffTimeSet] = useState([0, 30, 10, 30]);
+  const [timeSet, setTimeSet] = useState([50, 30, 10]);
+  const [offTimeSet, setOffTimeSet] = useState([0, 30, 10]);
 
   //Open state for the slidebars 
   //Only want one open at a time so we will have to change state if both are open
