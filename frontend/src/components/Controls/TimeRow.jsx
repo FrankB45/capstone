@@ -3,12 +3,12 @@ import { Col, Row, CardText } from 'reactstrap'
 
 function TimeRow({ time, label, color, onTimeChange, index }) {
   return (
-    <Row className="mt-2">
-      <Col xs="6" className="flex border-t border-gray-300 items-center">
-        <CardText className='w-1/2'>{label}</CardText>
+    <Row className="">
+      <Col xs="6" className="flex border-t border-gray-300 items-center py-2">
+        <CardText className='w-1/2 text-center'>{label}</CardText>
         <input 
             type="number" 
-            className={`text-${color}-300 font-bold w-1/2`}
+            className={`text-${color}-300 font-bold w-1/2 text-center`}
             value={time}
             onChange={(e) => onTimeChange(index, parseInt(e.target.value) || 0)}
             style={{ color: color}}

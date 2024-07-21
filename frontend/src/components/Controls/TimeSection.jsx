@@ -5,7 +5,7 @@ import TimeRow from './TimeRow'
 function TimeSection({ title, times, onTimeChange }) {
   return (
     <div>
-        <CardTitle className="text-xl font-bold">{title}</CardTitle>
+        <CardTitle className="text-xl font-bold p-2">{title}</CardTitle>
             {times.map((time, index) => (
                 <TimeRow 
                     key={index} 
@@ -18,10 +18,10 @@ function TimeSection({ title, times, onTimeChange }) {
             ))}
         <Row className="mt-2">
           <Col xs="6" className="flex border-t border-gray-300 items-center">
-          <CardText className='w-1/2'>Total</CardText>
-            {times.reduce((acc, time) => {
+          <CardText className='w-1/2 text-center'>Total</CardText>
+            <p className='w-1/2 text-center font-bold'>{times.reduce((acc, time) => {
               return acc + time.value;
-            }, 0)}
+            }, 0)}</p>
             
           </Col>
         </Row>

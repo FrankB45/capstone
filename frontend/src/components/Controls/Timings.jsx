@@ -53,13 +53,12 @@ function Timings({setTimeSet}) {
 
 
   return (
-    <div className="p-4">
-      <Card className="border border-gray-300 shadow-md">
-        <CardBody>
+      <Card className="p-1">
+        <CardBody className='border border-gray-300 shadow-md'>
           <TimeSection title="Shot timing" times={timings} onTimeChange={(index, newTime) => handleTimingChange(index, newTime, setTimings) } />
           <TimeSection title="Off-shot timing" times={offTimings} onTimeChange={ (index, newTime) => handleTimingChange(index, newTime, setOffTimings) } />
           <div className="">
-            <CardTitle className="text-xl font-bold pb-3">Seconds per arrow</CardTitle>
+            <CardTitle className="text-xl font-bold pb-3 pl-2">Seconds per arrow</CardTitle>
             <div className="flex justify-around pb-2">
                 <Button className={`text-white px-4 py-2 ${shotMode ? 'bg-blue-500' : 'bg-gray-500'}`} onClick={() => setShotMode(true)}>
                 30 Seconds
@@ -71,7 +70,6 @@ function Timings({setTimeSet}) {
           </div>
         </CardBody>
       </Card>
-    </div>
   )
 }
 
