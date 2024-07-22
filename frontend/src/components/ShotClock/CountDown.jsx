@@ -1,5 +1,6 @@
 import { React, useState, useRef, useEffect } from 'react'
 import Controls from './Controls'
+import './CountDown.css'
 
 function CountDown({timeSet}) {
 
@@ -91,8 +92,8 @@ function CountDown({timeSet}) {
       }} className={`flex flex-col items-center justify-center ${getColor()}`}>
         <div style={{ 
           fontSize: '3em', 
-          fontWeight: 'bold'
-        }} className='font-bold text-5xl' >
+          fontFamily: 'tech'
+        }} className='text-5xl clock-font' >
           {formatTime(time)}
         </div>
        

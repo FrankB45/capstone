@@ -12,7 +12,6 @@ function SlideBar({ isOpen, setIsOpen, side = 'left', children }) {
         <div className={`flex h-screen transition-all duration-300 ease-in-out ${isOpen ? 'w-1/4' : 'w-0'} ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
             <div className={`flex w-full`}>
                 <div className={`h-full w-full overflow-y-scroll no-scrollbar ${isOpen ? 'p-2' : 'p-0'}`}>
-                    {isOpen && <h2 className='text-lg font-bold'>Controls</h2>}
                     {children}
                 </div>
             </div>
