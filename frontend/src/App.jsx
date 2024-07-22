@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import CountDown from './components/ShotClock/CountDown'
+import Game from './components/Game'
 import SlideBar from './components/SlideBar'
 import Timings from './components/Controls/Timings'
 import AuthSection from './components/Auth/AuthSection'
@@ -38,11 +38,11 @@ function App() {
     <div className='flex flex-row items-center flex-nowrap content-between'>
       <SlideBar isOpen={isLeftOpen} setIsOpen={setIsOpen} side='left'>
         <h2 className='text-lg font-bold'>Controls</h2>
-        <Timings setTimeSet = {setTimeSet} />
+        <Timings setTimeSet = {setTimeSet} setOffTimeSet = {setOffTimeSet} />
       </SlideBar>
-      <div className='flex flex-col items-center flex-1 grow'> 
+      <div className='flex flex-col items-center justify-start h-screen flex-1 grow'> 
         <h1 style={{fontSize:'min(10vw, 10vh)'}} className=''>Arch Shot</h1>
-        <CountDown timeSet={timeSet} />
+        <Game timeSet={timeSet} offTimeSet={offTimeSet} />
       </div>
       <SlideBar isOpen={isRightOpen} setIsOpen={setIsOpen} side='right'>
         <h2 className='text-lg font-bold'>Extra Features</h2>

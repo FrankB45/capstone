@@ -2,15 +2,22 @@ import { React, useState, useRef, useEffect } from 'react'
 import Controls from './Controls'
 import './CountDown.css'
 
-function CountDown({timeSet}) {
+/**
+ * gameState will be used to determine the state that the control buttons should be in
+ * timeSet will be the set of times that the timer should countdown from
+ * isInShotTimer will change a display value to show if the timer is in the shot or off-shot mode
+ * endNum will change a display value to show the current end number
+ * handleTimerFinish will be called when the timer finishes
+ * 
+ */
 
+function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinish, isRunning, setIsRunning }) {
   //Used to keep track of the running time
   const [time, setTime] = useState(timeSet.reduce((acc, time) => acc + time, 0));
   //Used to keep track of the running state
-  const [isRunning, setIsRunning] = useState(false);
+  //const [isRunning, setIsRunning] = useState(false);
   //Interval reference to keep track of the running Interval clock
   const intervalRef = useRef(null);
-
 
   // Helper functions for the control buttons
   const handleStart = () => {
@@ -27,36 +34,38 @@ function CountDown({timeSet}) {
 
   const handleStop = () => {
     setIsRunning(false);
-    setTime(time);
+    setTime(timeSet.reduce((acc, time) => acc + time, 0));
+    setEndNumber(1);
   };
 
   const handleReverse = () => {
     setIsRunning(false);
-    setTime(timeSet[3]);
+    setTime(timeSet.reduce((acc, time) => acc + time, 0));
   };
 
-  //Effect to stop and start the inverval clock
-  useEffect(() => {
-    if (isRunning) {
-      intervalRef.current = setInterval(() => {
-        setTime((prevTime) => {
-          if (prevTime > 0) {
-            return prevTime - 1;
-          } else {
-            clearInterval(intervalRef.current);
+  //Effect to stop and start the interval clock 
+  useEffect(() => { 
+    if (isRunning) { 
+      //While the timer is running, the interval will decrement time every second.
+      intervalRef.current = setInterval(() => { 
+        setTime((prevTime) => { 
+          if (prevTime > 0) { 
+            return prevTime - 1; 
+          }else { 
+            clearInterval(intervalRef.current); 
             setIsRunning(false);
-            return 0;
-          }
-        });
-      }, 1000);
-    } else if (!isRunning && intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
+            handleTimerFinish(); 
+            return 0; 
+          } 
+      }); }, 1000);
+    }else if (!isRunning && intervalRef.current) {
+      clearInterval(intervalRef.current); 
+    } 
+    return () => clearInterval(intervalRef.current); 
+  }, [isRunning]); 
 
-    return () => clearInterval(intervalRef.current);
-  }, [isRunning]);
-
-  //Effect to update the time based on the timeSet
+  //Effect to update the time based on changes to the timeSet
+  //This should be removed I think or reworked to only allow changes during certain state
   useEffect(() => {
     let totalTime = timeSet.reduce((acc, time) => acc + time, 0);
     setTime(totalTime);
@@ -65,28 +74,33 @@ function CountDown({timeSet}) {
       clearInterval(intervalRef.current);
     }
   }, [timeSet]);
-
     
-    //Helper function to convert seconds into MM:SS format
-    const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainderSeconds = seconds % 60;
-        return `${minutes < 10 ? '0' : ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
-      };
-    
-    //gets the color for the time based on the timeSet
-    const getColor = () => {
-      if (time > timeSet[1]) {
-        return 'text-green-600';
-      } else if (time > timeSet[2]) {
-        return 'text-orange-600';
-      } else {
-        return 'text-red-600';
-      }
+  //Helper function to convert seconds into MM:SS format
+  const formatTime = (seconds) => {
+      const minutes = Math.floor(seconds / 60);
+      const remainderSeconds = seconds % 60;
+      return `${minutes < 10 ? '0' : ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
+    };
+  
+  //gets the color for the time based on the timeSet
+  const getColor = () => {
+    const totalTime = timeSet.reduce((acc, time) => acc + time, 0);
+    const greenTime = totalTime - timeSet[0];
+    const yellowTime = greenTime - timeSet[1];
+  
+    if (time > greenTime) {
+      return 'text-green-600';
+    } else if (time > yellowTime) {
+      return 'text-orange-600';
+    } else {
+      return 'text-red-600';
     }
+  }
 
   return (
-    <div>
+    <div className='flex-1 w-full h-full'>
+      <p>Currently in: {isInShotTimer() ? "Shot Time" : "Off-Shot Time"}</p>
+      <p>End Number: {endNum}/24</p>
       <div style={{ 
         fontSize: 'min(10vw, 20vh)'
       }} className={`flex flex-col items-center justify-center ${getColor()}`}>

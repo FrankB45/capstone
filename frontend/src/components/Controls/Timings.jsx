@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { Card, CardBody, Button, CardTitle } from 'reactstrap'
 import TimeSection from './TimeSection'
 
-function Timings({setTimeSet}) {
+function Timings({setTimeSet, setOffTimeSet}) {
     //ShotMode indicates if we are using 30 seconds per arrow or 40 seconds per arrow
     //true = 30 seconds per arrow
     //false = 40 seconds per arrow
@@ -29,9 +29,12 @@ function Timings({setTimeSet}) {
         const newTimings = prev.map((time, i) =>
           i === index ? { ...time, value: newTime } : time
         );
-  
         // Update the parent component's state
-        setTimeSet(newTimings.map(t => t.value));
+        if(updater === setOffTimeSet) {
+          setOffTimeSet(newTimings.map(t => t.value));
+        }else {
+          setTimeSet(newTimings.map(t => t.value));
+        }
   
         return newTimings;
       });
