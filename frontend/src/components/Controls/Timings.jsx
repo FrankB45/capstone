@@ -30,12 +30,13 @@ function Timings({setTimeSet, setOffTimeSet}) {
           i === index ? { ...time, value: newTime } : time
         );
         // Update the parent component's state
-        if(updater === setOffTimeSet) {
+        if (updater === setOffTimings) {
+          console.log("Updating OffTimings");
           setOffTimeSet(newTimings.map(t => t.value));
-        }else {
+        } else if (updater === setTimings) {
+          console.log("Updating Timings");
           setTimeSet(newTimings.map(t => t.value));
         }
-  
         return newTimings;
       });
     };
