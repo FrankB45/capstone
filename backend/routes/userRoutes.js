@@ -51,13 +51,27 @@ router.post('/authenticate', validate(userSchema), async (req, res, next) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict'
+            sameSite: 'strict',
+            path: '/'
         })
 
         return res.status(200).json({ user });
     } catch (err) {
         return next(err);
     }
+});
+
+//Logout
+// Clears the token cookie
+// returns a message of success
+router.post('/logout', async (req, res, next) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path: '/'
+    })
+    return res.status(200).json({ message: 'Logout successful' });
 });
 
 module.exports = router;
