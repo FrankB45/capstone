@@ -15,7 +15,7 @@ const router = express.Router();
 // Accepts a username and password
 // body must be validated by the userSchema
 // Creates a new user in the database 
-// Returns the user and a token
+// Returns the user and sets the token in an HTTP-only cookie
 router.post('/register', validate(userSchema), async (req, res, next) => {
     try {
         const { username, password } = req.body;
@@ -24,7 +24,13 @@ router.post('/register', validate(userSchema), async (req, res, next) => {
 
         const token = generateToken(user);
 
-        return res.status(201).json({ user, token });
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        })
+
+        return res.status(201).json({ user });
     } catch (err) {
         return next(err);
     }
@@ -33,7 +39,7 @@ router.post('/register', validate(userSchema), async (req, res, next) => {
 //Authenticate
 // Accepts a username and password
 // body must be validated by the userSchema
-// Returns the user if the username and password match and token
+// Returns the user if the username and password match and sets the token in an HTTP-only cookie
 router.post('/authenticate', validate(userSchema), async (req, res, next) => {
     try {
         const { username, password } = req.body;
@@ -42,7 +48,13 @@ router.post('/authenticate', validate(userSchema), async (req, res, next) => {
 
         const token = generateToken(user);
 
-        return res.status(200).json({ user, token });
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        })
+
+        return res.status(200).json({ user });
     } catch (err) {
         return next(err);
     }

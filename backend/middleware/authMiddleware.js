@@ -2,10 +2,9 @@ const { verifyToken } = require('../jwt');
 const Game = require('../models/game');
 
 function authenticateJWT(req, res, next) {
-    const authHeader = req.headers.authorization;
+    const token = req.cookies.token;
 
-    if (authHeader) {
-        const token = authHeader.split(' ')[1];
+    if (token) {
 
         try {
             const decoded = verifyToken(token);
