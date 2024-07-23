@@ -40,7 +40,7 @@ const AuthSection = ({ loggedInUser, setLoggedInUser }) => {
               <p>Currently has 0 games</p>
               <p>Average score: 0</p>
             </CardBody>
-            <Button onClick={() => handleSubmit('logout')} className="py-2 px-3 bg-slate-500 text-white rounded-sm w-full">Logout</Button>
+            <Button onClick={() => handleSubmit('logout')} className="py-2 px-3 bg-zinc-700 text-white rounded-sm w-full">Logout</Button>
             </div>
           ) : (
           <>

@@ -99,11 +99,10 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
 
   return (
     <div className='flex-1 w-full h-full'>
-      <p>Currently in: {isInShotTimer() ? "Shot Time" : "Off-Shot Time"}</p>
-      <p>End Number: {endNum}/24</p>
+
       <div style={{ 
         fontSize: 'min(10vw, 20vh)'
-      }} className={`flex flex-col items-center justify-center ${getColor()}`}>
+      }} className={`flex flex-col items-center justify-center h-4/5 ${getColor()}`}>
         <div style={{ 
           fontSize: '3em', 
           fontFamily: 'tech'
@@ -112,11 +111,19 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
         </div>
        
       </div>
-      <div className='flex'>
-        <Controls handleStart={handleStart} handlePause={handlePause} handleStop={handleStop} handleReverse={handleReverse} />
+      <div className='flex justify-center items-center'>
+        <Controls handleStart={handleStart} handlePause={handlePause} handleStop={handleStop} handleReverse={handleReverse} />  
+        <div className='w-1/4'>
+          <p style={{ 
+        fontSize: 'min(2vw, 2vh)'
+      }} >Currently in: {isInShotTimer() ? "Shot Time" : "Off-Shot Time"}</p>
+          <p style={{ 
+        fontSize: 'min(2vw, 2vh)'
+      }} >End Number: {endNum}/24</p>
+        </div>
         <h1 style={{ 
           fontSize: 'min(6vw, 10vh)'
-        }} className='w-1/2 text-center' >AB CD</h1>
+        }} className='w-1/4 text-zinc-800' >AB CD</h1>
       </div>
     </div>
   )

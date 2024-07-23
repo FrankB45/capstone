@@ -47,14 +47,14 @@ function App() {
       <SlideBar isOpen={isLeftOpen} setIsOpen={setIsOpen} side='left'>
         <div className="flex flex-row mb-2">
           <Button
-            className={`py-2 px-3 ${isControls ? 'bg-slate-500 text-white' : 'bg-gray-300 text-black'} rounded-l`}
+            className={`py-2 px-3 ${isControls ? 'bg-zinc-700 text-white' : 'bg-gray-300 text-black'} rounded-l`}
             onClick={() => setIsControls(true)}
           >
             Controls
           </Button>
           {loggedInUser && (
             <Button
-              className={`py-2 px-3 ${!isControls ? 'bg-slate-500 text-white' : 'bg-gray-300 text-black'} rounded-r`}
+              className={`py-2 px-3 ${!isControls ? 'bg-zinc-700 text-white' : 'bg-gray-300 text-black'} rounded-r`}
               onClick={() => setIsControls(false)}
             >
               ScoreBoard
@@ -68,7 +68,7 @@ function App() {
         )}
       </SlideBar>
       <div className='flex flex-col items-center justify-start h-screen flex-1 grow'> 
-        <h1 style={{fontSize:'min(10vw, 10vh)'}} className=''>Arch Shot</h1>
+        <h1 style={{fontSize:'min(10vw, 10vh)'}} className=''>Archery Clock</h1>
         <Game timeSet={timeSet} offTimeSet={offTimeSet} />
       </div>
       <SlideBar isOpen={isRightOpen} setIsOpen={setIsOpen} side='right'>

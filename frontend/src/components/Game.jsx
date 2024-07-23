@@ -50,7 +50,7 @@ function Game({timeSet, offTimeSet}) {
 
     
   return (
-    <div>
+    <div className='flex-1 w-full h-full'>
       <CountDown timeSet={currentTimeSet} isInShotTimer={isInShotTimer} endNum={endNum} handleTimerFinish={handleTimerFinish} isRunning={isTimerRunning} setIsRunning={setIsTimerRunning} />
     </div>
   )
