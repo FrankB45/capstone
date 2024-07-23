@@ -1,0 +1,15 @@
+@font-face {
+    font-family: digital;
+    src: url(./fonts/digital.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: tech;
+    src: url(./fonts/technology.otf);
+}
+  
+.clock-font {
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: auto;
+}
