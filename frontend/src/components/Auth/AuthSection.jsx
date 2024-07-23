@@ -1,50 +1,50 @@
-import React, { useState } from 'react';
+import  { React, useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
+import useAuth from '../../hooks/useAuth';
+import Cookies from 'js-cookie';
 
 const AuthSection = () => {
+  //Managed state
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  //Hook to handle auth requests
+  const { error, message, handleAuth } = useAuth();
+
+  //State for login
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  //Effect to update the logged in user
+  useEffect(() => {
+    const username = Cookies.get('username');
+    if(username) {
+        setLoggedInUser(username);
+    }else {
+        setLoggedInUser(null);
+    }
+      
+  }, [message]);
+
 
   const handleSubmit = async (action) => {
-    setError('');
-    setMessage('');
-
-    if (!username || !password) {
-      setError('Please enter both username and password.');
-      return;
-    }
-
-    const endpoint = action === 'login' ? '/authenticate' : '/register';
-
-    try {
-      // This is a placeholder for the actual API call
-      // Replace this with your actual API call
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(action === 'login' ? 'Login successful!' : 'Registration successful!');
-        // Here you would typically save the user's token or update your app's auth state
-      } else {
-        setError(data.message || 'An error occurred. Please try again.');
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    }
+    handleAuth(username, password, action);
   };
 
   return (
       <Card className="p-2 border border-gray-300 shadow-md">
         <CardBody>
+          {loggedInUser ? (
+            <div>
+            <CardTitle tag="h2" className="text-xl font-bold mb-4">
+              Archer: {loggedInUser}
+            </CardTitle>
+            <CardBody>
+              <p>Currently has 0 games</p>
+              <p>Average score: 0</p>
+            </CardBody>
+            <Button onClick={() => handleSubmit('logout')} className="w-full">Logout</Button>
+            </div>
+          ) : (
+          <>
           <CardTitle tag="h2" className="text-xl font-bold mb-4">
             Authentication
           </CardTitle>
@@ -56,8 +56,8 @@ const AuthSection = () => {
               <li>See how you rank up with archers around the world!</li>
             </ul>
           </div>
-          {error && <Alert color="danger">{error}</Alert>}
-          {message && <Alert color="success">{message}</Alert>}
+          {error && <p>{error}</p>}
+          {message && <p>{message}</p>}
           <Form>
             <FormGroup className="mb-4">
               <Label for="username" className="text-white">Username</Label>
@@ -68,7 +68,7 @@ const AuthSection = () => {
                 placeholder="Enter your username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md"
               />
             </FormGroup>
             <FormGroup className="mb-6">
@@ -80,18 +80,20 @@ const AuthSection = () => {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md"
               />
             </FormGroup>
             <div className="flex justify-between mt-6">
-              <Button color="primary" onClick={() => handleSubmit('login')} className="w-[48%]">
+              <Button onClick={() => handleSubmit('login')} className="w-[48%]">
                 Login
               </Button>
-              <Button color="secondary" onClick={() => handleSubmit('register')} className="w-[48%]">
+              <Button onClick={() => handleSubmit('register')} className="w-[48%]">
                 Register
               </Button>
             </div>
           </Form>
+          </> 
+        )}
         </CardBody>
       </Card>
   );

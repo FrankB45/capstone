@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import API_ROUTES from '../config';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const useAuth = () => {
     const [error, setError] = useState('');
@@ -9,6 +10,19 @@ const useAuth = () => {
     const handleAuth = async (username, password, action) => {
         setError('');
         setMessage('');
+
+        if (action === 'logout') {
+            try {
+                const response = await axios.post(API_ROUTES.LOGOUT, {}, { withCredentials: true });
+                if (response.status === 200) {
+                    Cookies.remove('username');
+                    setMessage('Logout successful!');
+                }
+            } catch (err) {
+                setError('Error logging out. Please try again.');
+            }
+            return;
+        }
 
         if (!username || !password) {
             setError('Username and password are required.');
@@ -22,11 +36,11 @@ const useAuth = () => {
             const response = await axios.post(endpoint, {
                 username,
                 password
-            });
+            }, { withCredentials: true });
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 setMessage(action === 'login' ? 'Login successful!' : 'Registration successful!');
-                //Should be OK here because of HTTP-Only cookies
+                Cookies.set('username', response.data.user.username);
             }
 
 
