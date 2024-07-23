@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { Button } from 'reactstrap'
 import './App.css'
 import Game from './components/Game'
 import SlideBar from './components/SlideBar'
 import Timings from './components/Controls/Timings'
 import AuthSection from './components/Auth/AuthSection'
 import AboutSection from './components/Auth/About'
+import ScoreBoard from './components/Controls/ScoreBoard'
 
 function App() {
 
@@ -17,6 +19,12 @@ function App() {
   //Only want one open at a time so we will have to change state if both are open
   const [isLeftOpen, setIsLeftOpen] = useState(true);
   const [isRightOpen, setIsRightOpen] = useState(false);
+
+  //State for login
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  // State to toggle between Controls and ScoreBoard
+  const [isControls, setIsControls] = useState(true);
 
   const setIsOpen = (side) => {
     if (side === 'left') {
@@ -37,8 +45,27 @@ function App() {
   return (
     <div className='flex flex-row items-center flex-nowrap content-between'>
       <SlideBar isOpen={isLeftOpen} setIsOpen={setIsOpen} side='left'>
-        <h2 className='text-lg font-bold'>Controls</h2>
-        <Timings setTimeSet = {setTimeSet} setOffTimeSet = {setOffTimeSet} />
+        <div className="flex flex-row mb-2">
+          <Button
+            className={`py-2 px-3 ${isControls ? 'bg-slate-500 text-white' : 'bg-gray-300 text-black'} rounded-l`}
+            onClick={() => setIsControls(true)}
+          >
+            Controls
+          </Button>
+          {loggedInUser && (
+            <Button
+              className={`py-2 px-3 ${!isControls ? 'bg-slate-500 text-white' : 'bg-gray-300 text-black'} rounded-r`}
+              onClick={() => setIsControls(false)}
+            >
+              ScoreBoard
+            </Button>
+          )}
+        </div>
+        {isControls ? (
+          <Timings setTimeSet={setTimeSet} setOffTimeSet={setOffTimeSet} />
+        ) : (
+          <ScoreBoard />
+        )}
       </SlideBar>
       <div className='flex flex-col items-center justify-start h-screen flex-1 grow'> 
         <h1 style={{fontSize:'min(10vw, 10vh)'}} className=''>Arch Shot</h1>
@@ -46,7 +73,7 @@ function App() {
       </div>
       <SlideBar isOpen={isRightOpen} setIsOpen={setIsOpen} side='right'>
         <h2 className='text-lg font-bold'>Extra Features</h2>
-        <AuthSection />
+        <AuthSection loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
         <AboutSection />
       </SlideBar>
     </div>

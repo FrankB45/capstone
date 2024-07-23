@@ -3,15 +3,14 @@ import { Card, CardBody, CardTitle, Form, FormGroup, Label, Input, Button, Alert
 import useAuth from '../../hooks/useAuth';
 import Cookies from 'js-cookie';
 
-const AuthSection = () => {
+const AuthSection = ({ loggedInUser, setLoggedInUser }) => {
   //Managed state
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   //Hook to handle auth requests
   const { error, message, handleAuth } = useAuth();
 
-  //State for login
-  const [loggedInUser, setLoggedInUser] = useState(null);
+
 
   //Effect to update the logged in user
   useEffect(() => {
@@ -41,7 +40,7 @@ const AuthSection = () => {
               <p>Currently has 0 games</p>
               <p>Average score: 0</p>
             </CardBody>
-            <Button onClick={() => handleSubmit('logout')} className="w-full">Logout</Button>
+            <Button onClick={() => handleSubmit('logout')} className="py-2 px-3 bg-slate-500 text-white rounded-sm w-full">Logout</Button>
             </div>
           ) : (
           <>
@@ -84,10 +83,10 @@ const AuthSection = () => {
               />
             </FormGroup>
             <div className="flex justify-between mt-6">
-              <Button onClick={() => handleSubmit('login')} className="w-[48%]">
+              <Button onClick={() => handleSubmit('login')} className="py-2 px-3 bg-slate-500 text-white rounded-sm w-[48%]">
                 Login
               </Button>
-              <Button onClick={() => handleSubmit('register')} className="w-[48%]">
+              <Button onClick={() => handleSubmit('register')} className="py-2 px-3 bg-slate-500 text-white rounded-sm w-[48%]">
                 Register
               </Button>
             </div>
