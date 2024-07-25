@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import useGame from '../../hooks/useGame';
 
 const ScoreBoard = () => {
   const [scores, setScores] = useState(Array(24).fill(Array(3).fill(null)));
   const [currentEnd, setCurrentEnd] = useState(0);
   const [currentShot, setCurrentShot] = useState(0);
   const [inputScore, setInputScore] = useState('');
+  
+  const { error, message, handleGame } = useGame();
 
   const addShot = () => {
     if (inputScore === '' || currentEnd >= 24) return;
@@ -14,6 +17,9 @@ const ScoreBoard = () => {
       alert('Please enter a valid score between 0 and 10');
       return;
     }
+
+    //Add a shot to the API
+    handleGame(score, 'addShot');
 
     const newScores = scores.map((end, i) => {
       if (i === currentEnd) {

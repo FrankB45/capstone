@@ -16,6 +16,7 @@ const useAuth = () => {
                 const response = await axios.post(API_ROUTES.LOGOUT, {}, { withCredentials: true });
                 if (response.status === 200) {
                     Cookies.remove('username');
+                    Cookies.remove('userID');
                     setMessage('Logout successful!');
                 }
             } catch (err) {
@@ -41,6 +42,7 @@ const useAuth = () => {
             if (response.status === 200 || response.status === 201) {
                 setMessage(action === 'login' ? 'Login successful!' : 'Registration successful!');
                 Cookies.set('username', response.data.user.username);
+                Cookies.set('userID', response.data.user.id);
             }
 
 

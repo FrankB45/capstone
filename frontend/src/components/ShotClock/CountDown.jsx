@@ -1,5 +1,6 @@
 import { React, useState, useRef, useEffect } from 'react'
 import Controls from './Controls'
+import TurnIndicator from '../Controls/TurnIndicator'
 import './CountDown.css'
 
 /**
@@ -11,7 +12,7 @@ import './CountDown.css'
  * 
  */
 
-function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinish, isRunning, setIsRunning }) {
+function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinish, isRunning, setIsRunning, scenario, turn }) {
   //Used to keep track of the running time
   const [time, setTime] = useState(timeSet.reduce((acc, time) => acc + time, 0));
   //Used to keep track of the running state
@@ -32,15 +33,18 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
     }
   };
 
-  const handleStop = () => {
+  const handleNext = () => {
     setIsRunning(false);
-    setTime(timeSet.reduce((acc, time) => acc + time, 0));
-    setEndNumber(1);
+    handleTimerFinish();
   };
 
   const handleReverse = () => {
     setIsRunning(false);
     setTime(timeSet.reduce((acc, time) => acc + time, 0));
+  };
+
+  const handleGameStart = () => {
+    handleTimerFinish();
   };
 
   //Effect to stop and start the interval clock 
@@ -99,7 +103,6 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
 
   return (
     <div className='flex-1 w-full h-full'>
-
       <div style={{ 
         fontSize: 'min(10vw, 20vh)'
       }} className={`flex flex-col items-center justify-center h-4/5 ${getColor()}`}>
@@ -109,21 +112,19 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
         }} className='text-5xl clock-font' >
           {formatTime(time)}
         </div>
-       
       </div>
+      
       <div className='flex justify-center items-center'>
-        <Controls handleStart={handleStart} handlePause={handlePause} handleStop={handleStop} handleReverse={handleReverse} />  
+        <Controls handleStart={handleStart} handlePause={handlePause} handleNext={handleNext} handleReverse={handleReverse} isRunning={isRunning} gameState={gameState} handleGameStart={handleGameStart} />  
         <div className='w-1/4'>
           <p style={{ 
         fontSize: 'min(2vw, 2vh)'
-      }} >Currently in: {isInShotTimer() ? "Shot Time" : "Off-Shot Time"}</p>
+      }} className='font-bold'>Currently in: {isInShotTimer() ? "Shot Time" : "Off-Shot Time"}</p>
           <p style={{ 
         fontSize: 'min(2vw, 2vh)'
       }} >End Number: {endNum}/24</p>
         </div>
-        <h1 style={{ 
-          fontSize: 'min(6vw, 10vh)'
-        }} className='w-1/4 text-zinc-800' >AB CD</h1>
+        <TurnIndicator scenario={scenario} turn={turn} />
       </div>
     </div>
   )
