@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from 'reactstrap'
 import './App.css'
 import Game from './components/Game'
@@ -9,6 +9,7 @@ import AboutSection from './components/Auth/About'
 import ScoreBoard from './components/Controls/ScoreBoard'
 import Scenarios from './components/Controls/Scenarios'
 import GameControls from './components/Controls/GameControls'
+import Cookies from 'js-cookie';
 
 function App() {
 
@@ -53,7 +54,29 @@ function App() {
   // 2 = Practice End
   // 3 = Shooting
   // 4 = Match Finished
-  const [gameState, setGameState] = useState(0);
+  const [gameState, setGameState] = useState(Cookies.get('gameID') ?  3 : 0);
+
+  //Effect to handle the case of user logging in or out in different game states
+  //In any event, restart the game. 
+  useEffect(() => {
+    //If the user logs out when a game is in progress, set the game state to 0
+    if(!loggedInUser){
+      console.log("GameState set 0 by !loggedInUser effect");
+      setGameState(0);
+    }
+    //If the user logs in when a game is in progress, set the game state to 0
+    if(loggedInUser){
+      console.log("GameState set 0 by loggedInUser effect");
+      if(Cookies.get('gameID')){
+        console.log("GameState set 3 by loggedInUser effect");
+        setGameState(3);
+      }else {
+         setGameState(0);
+      }
+    }
+  },[loggedInUser]);
+
+
 
   const setIsOpen = (side) => {
     if (side === 'left') {
@@ -102,7 +125,9 @@ function App() {
         )}
       </SlideBar>
       <div className='flex flex-col items-center justify-start h-screen flex-1 grow'> 
-        <h1 style={{fontSize:'min(10vw, 10vh)'}} className=''>Archery Clock</h1>
+        <h1 style={{
+          fontSize: gameState > 0 ? 'min(5vw, 5vh)' : 'min(10vw, 10vh)'
+          }} className=''>Archery Clock</h1>
         <Game timeSet={timeSet} offTimeSet={offTimeSet} gameState={gameState} selectedScenario={selectedScenario} gameSettings={gameSettings} setGameState={setGameState} />
       </div>
       <SlideBar isOpen={isRightOpen} setIsOpen={setIsOpen} side='right'>

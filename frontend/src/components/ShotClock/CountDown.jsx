@@ -12,7 +12,7 @@ import './CountDown.css'
  * 
  */
 
-function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinish, isRunning, setIsRunning, scenario, turn }) {
+function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinish, isRunning, setIsRunning, scenario, turn, title }) {
   //Used to keep track of the running time
   const [time, setTime] = useState(timeSet.reduce((acc, time) => acc + time, 0));
   //Used to keep track of the running state
@@ -57,7 +57,7 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
             return prevTime - 1; 
           }else { 
             clearInterval(intervalRef.current); 
-            setIsRunning(false);
+            //setIsRunning(false);
             handleTimerFinish(); 
             return 0; 
           } 
@@ -103,9 +103,12 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
 
   return (
     <div className='flex-1 w-full h-full'>
+      <h1 style={{
+        fontSize: 'min(10vw, 10vh)'
+      }} className='flex justify-center items-center font-bold pt-2'>{title}</h1>
       <div style={{ 
         fontSize: 'min(10vw, 20vh)'
-      }} className={`flex flex-col items-center justify-center h-4/5 ${getColor()}`}>
+      }} className={`flex flex-col items-center justify-center h-3/5 ${getColor()}`}>
         <div style={{ 
           fontSize: '3em', 
           fontFamily: 'tech'
@@ -119,7 +122,7 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
         <div className='w-1/4'>
           <p style={{ 
         fontSize: 'min(2vw, 2vh)'
-      }} className='font-bold'>Currently in: {isInShotTimer() ? "Shot Time" : "Off-Shot Time"}</p>
+      }} className='font-bold'>Currently in: {isInShotTimer ? "Shot Time" : "Off-Shot Time"}</p>
           <p style={{ 
         fontSize: 'min(2vw, 2vh)'
       }} >End Number: {endNum}/24</p>

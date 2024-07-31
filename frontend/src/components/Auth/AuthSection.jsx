@@ -2,6 +2,7 @@ import  { React, useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import useAuth from '../../hooks/useAuth';
 import Cookies from 'js-cookie';
+import useGame from '../../hooks/useGame';
 
 const AuthSection = ({ loggedInUser, setLoggedInUser }) => {
   //Managed state
@@ -9,6 +10,9 @@ const AuthSection = ({ loggedInUser, setLoggedInUser }) => {
   const [password, setPassword] = useState('');
   //Hook to handle auth requests
   const { error, message, handleAuth } = useAuth();
+  const { error: gameError, message: gameMessage, handleGame } = useGame();
+
+  let gameIDs = [];
 
 
 
@@ -22,6 +26,15 @@ const AuthSection = ({ loggedInUser, setLoggedInUser }) => {
     }
       
   }, [message]);
+
+  useEffect(() => {
+    async function getGameIDs() {
+      //let games = await handleGame(0, 'getIDs');
+      //gameIDs = games.games;
+      //console.log("Game IDs: ", gameIDs);
+    }
+    //getGameIDs();
+  }, [username]);
 
 
   const handleSubmit = async (action) => {
@@ -37,7 +50,7 @@ const AuthSection = ({ loggedInUser, setLoggedInUser }) => {
               Archer: {loggedInUser}
             </CardTitle>
             <CardBody>
-              <p>Currently has 0 games</p>
+              <p>Currently has {gameIDs.length} games</p>
               <p>Average score: 0</p>
             </CardBody>
             <Button onClick={() => handleSubmit('logout')} className="py-2 px-3 bg-zinc-700 text-white rounded-sm w-full">Logout</Button>

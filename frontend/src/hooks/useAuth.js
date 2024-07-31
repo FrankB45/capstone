@@ -17,6 +17,7 @@ const useAuth = () => {
                 if (response.status === 200) {
                     Cookies.remove('username');
                     Cookies.remove('userID');
+                    Cookies.remove('gameID');
                     setMessage('Logout successful!');
                 }
             } catch (err) {

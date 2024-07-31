@@ -61,6 +61,46 @@ const useGame = () => {
 
         }
 
+        if (action === 'getIDs') {
+            if (Cookies.get('userID')) {
+                try {
+                    const response = await axios.get(`${API_ROUTES.BASE}/users/${Cookies.get('userID')}/games`, { withCredentials: true });
+                    if (response.status === 200) {
+                        console.log("Successfully retrieved game IDs");
+                        setMessage('Game IDs retrieved successfully!');
+                        return response.data;
+                    }
+                } catch (error) {
+                    setError(error.response.data.message || "Error from Server Received");
+                }
+            }
+            else {
+                setError('Must be signed in to get game IDs.');
+                console.log("A game IDs request was attempted without being signed in");
+                return;
+            }
+        }
+
+        if (action === 'getGame') {
+            if (Cookies.get('gameID')) {
+                try {
+                    const response = await axios.get(`${API_ROUTES.BASE}/games/${Cookies.get('gameID')}`, { withCredentials: true });
+                    if (response.status === 200) {
+                        console.log("Successfully retrieved game");
+                        setMessage('Game retrieved successfully!');
+                        return response.data;
+                    }
+                } catch (error) {
+                    setError(error.response.data.message || "Error from Server Received");
+                }
+            }
+            else {
+                setError('Must be signed in to get game.');
+                console.log("A game request was attempted without being signed in");
+                return;
+            }
+        }
+
     };
     return { error, message, handleGame };
 };
