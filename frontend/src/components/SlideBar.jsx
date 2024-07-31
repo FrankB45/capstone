@@ -15,7 +15,7 @@ function SlideBar({ isOpen, setIsOpen, side = 'left', children }) {
                     {children}
                 </div>
             </div>
-            <Button onClick={() => setIsOpen(side)} className='flex text-2xl font-extrabold bg-zinc-700 z-50'>{isOpen 
+            <Button onClick={() => setIsOpen(side)} className='flex text-2xl items-center font-extrabold bg-zinc-700 z-50'>{isOpen 
     ? (isLeft ? '◀' : '▶') 
     : (isLeft ? '▶' : '◀')
 }</Button>
