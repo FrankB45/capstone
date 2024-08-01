@@ -29,8 +29,8 @@ function GameControls({ onSettingsChange }) {
         
         <Row className="">
           <Col xs="6" className="flex border-t border-gray-300 items-center py-2">
-            <CardText className='w-1/2 text-center'>Include pre-match countdown</CardText>
-            <div className='w-1/2 text-center'>
+            <CardText className='w-2/3 text-center'>Include pre-match countdown</CardText>
+            <div className='w-1/3 text-center'>
               <input 
                 type="checkbox"
                 className="text-white bg-zinc-700 font-bold text-center w-1/4"
@@ -44,8 +44,8 @@ function GameControls({ onSettingsChange }) {
 
         <Row className="">
           <Col xs="6" className="flex border-t border-gray-300 items-center py-2">
-            <CardText className='w-1/2 text-center'>Pre-Match time(seconds)</CardText>
-            <div className='w-1/2 text-center'>
+            <CardText className='w-2/3 text-center'>Pre-Match time(seconds)</CardText>
+            <div className='w-1/3 text-center'>
               <input 
                 type="number" 
                 className="text-white bg-zinc-700 font-bold text-center w-1/4"
@@ -61,8 +61,8 @@ function GameControls({ onSettingsChange }) {
 
         <Row className="">
           <Col xs="6" className="flex border-t border-gray-300 items-center py-2">
-            <CardText className='w-1/2 text-center'>Number of Practice Ends (0 - none)</CardText>
-            <div className='w-1/2 text-center'>
+            <CardText className='w-2/3 text-center'>Number of Practice Ends (0 - none)</CardText>
+            <div className='w-1/3 text-center'>
               <input 
                 type="number" 
                 className="text-gray-300 bg-zinc-700 font-bold text-center w-1/4"

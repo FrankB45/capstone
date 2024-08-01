@@ -1,6 +1,7 @@
 import { React, useState, useRef, useEffect } from 'react'
 import Controls from './Controls'
 import TurnIndicator from '../Controls/TurnIndicator'
+import SoundPlayer from './SoundPlayer'
 import './CountDown.css'
 
 /**
@@ -19,6 +20,8 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
   //const [isRunning, setIsRunning] = useState(false);
   //Interval reference to keep track of the running Interval clock
   const intervalRef = useRef(null);
+
+  const soundPlayer = useRef();
 
   // Helper functions for the control buttons
   const handleStart = () => {
@@ -53,6 +56,12 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
       //While the timer is running, the interval will decrement time every second.
       intervalRef.current = setInterval(() => { 
         setTime((prevTime) => { 
+          if (prevTime < 5 && prevTime > 2){
+            soundPlayer.current.play(1);
+          }
+          if (prevTime === 1){
+            soundPlayer.current.play(2);
+          }
           if (prevTime > 0) { 
             return prevTime - 1; 
           }else { 
@@ -103,6 +112,7 @@ function CountDown({ gameState, timeSet, isInShotTimer, endNum, handleTimerFinis
 
   return (
     <div className='flex-1 w-full h-full'>
+      <SoundPlayer ref={soundPlayer} />
       <h1 style={{
         fontSize: 'min(10vw, 10vh)'
       }} className='flex justify-center items-center font-bold pt-2'>{title}</h1>
