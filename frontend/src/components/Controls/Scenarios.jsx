@@ -18,8 +18,8 @@ function Scenarios({ onScenarioChange }) {
         <CardTitle className="text-xl font-bold pb-3 pl-2">Game Scenarios</CardTitle>
         <Row className="">
           <Col xs="6" className="flex border-t border-gray-300 items-center py-2">
-            <CardText className='w-1/2 text-center'>1 Archer per turn, 1 turn per end [A]</CardText>
-            <div className='w-1/2 text-center'>
+            <CardText className='w-3/4 text-center'>1 Archer per turn, 1 turn per end [A]</CardText>
+            <div className='w-1/4 text-center'>
               <input
                 type="radio"
                 name="scenario"
@@ -32,8 +32,8 @@ function Scenarios({ onScenarioChange }) {
             </div>
           </Col>
           <Col xs="6" className="flex border-t border-gray-300 items-center py-2">
-            <CardText className='w-1/2 text-center'>1 Archer per turn, 2 turns per end [A-B]</CardText>
-            <div className='w-1/2 text-center'>
+            <CardText className='w-3/4 text-center'>1 Archer per turn, 2 turns per end [A-B]</CardText>
+            <div className='w-1/4 text-center'>
               <input
                 type="radio"
                 name="scenario"
@@ -46,8 +46,8 @@ function Scenarios({ onScenarioChange }) {
             </div>
           </Col>
           <Col xs="6" className="flex border-t border-gray-300 items-center py-2">
-            <CardText className='w-1/2 text-center'>2 Archers per turn, 2 turns per end [AB-CD]</CardText>
-            <div className='w-1/2 text-center'>
+            <CardText className='w-3/4 text-center'>2 Archers per turn, 2 turns per end [AB-CD]</CardText>
+            <div className='w-1/4 text-center'>
               <input
                 type="radio"
                 name="scenario"

@@ -22,8 +22,8 @@ function OrientationCheck({ children }) {
   return (
     <div>
       { isLandscape ? children : (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
-        <div className="text-center text-white p-6 border-2 border-white rounded-lg bg-black bg-opacity-60">
+      <div className="fixed inset-0 flex items-center justify-center bg-zinc-700 z-50">
+        <div className="text-center text-white p-6 border-2 border-white rounded-lg bg-zinc-700 bg-opacity-60">
           Please rotate your device to landscape mode to continue.
         </div>
       </div>
